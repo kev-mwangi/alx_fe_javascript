@@ -46,3 +46,22 @@ function addQuote() {
 
 
 console.log(QuoteDisplay)
+
+displayQuote(randomQuote);
+
+  
+  localStorage.setItem("savedQuote", JSON.stringify(randomQuote));
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const savedQuote = localStorage.getItem("savedQuote");
+  if (savedQuote) {
+    const quoteObj = JSON.parse(savedQuote);
+    displayQuote(quoteObj);
+  } else {
+    getRandomQuote(); 
+  }
+});
+
+
+GenerateQuoteBtn.addEventListener("click", getRandomQuote);
