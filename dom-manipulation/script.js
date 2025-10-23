@@ -69,6 +69,16 @@ let  =JSON.parse(localStorage.getItem('quotes')) || [
     { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs", category: "Leadership" },
     { text: "Life is what happens to you while you're busy making other plans.", author: "John Lennon", category: "Life" }
 ];
+ function importFromJsonFile(event) {
+    const fileReader = new FileReader();
+    fileReader.onload = function(event) {
+      const importedQuotes = JSON.parse(event.target.result);
+      quotes.push(...importedQuotes);
+      saveQuotes();
+      alert('Quotes imported successfully!');
+    };
+    fileReader.readAsText(event.target.files[0]);
+  }
 if (exportquote) {
     const exportquote = JSON.parse(exportquote);
     displayQuote(exportquote);
