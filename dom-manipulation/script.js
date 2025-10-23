@@ -177,7 +177,7 @@ async function syncQuotes() {
         if (!lastFetch || (now - new Date(lastFetch)) > 24 * 60 * 60 * 1000) {
             console.log("⏰ Time to sync quotes from server...");
             const newQuote = await fetchQuotesFromServer();
-            console.log("New quote fetched during sync:", newQuote);
+            console.log("Quotes synced with server!");
         }
 
     }, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
