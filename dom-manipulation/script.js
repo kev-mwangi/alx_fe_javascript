@@ -99,7 +99,7 @@ async function fetchQuotesFromServer() {
         
         // Fetch from your actual quotes.json file in the repo
         const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
