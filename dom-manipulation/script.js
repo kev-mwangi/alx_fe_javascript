@@ -164,6 +164,24 @@ function getQuoteFromLocalStorage() {
     return fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
 }
 
+
+// Sycn Quotes function
+async function syncQuotes() {
+
+    const lastFetch = localStorage.getItem("quotes");
+    const now = new Date();
+
+
+    if (!lastFetch || (now - new Date(lastFetch)) > 24 * 60 * 60 * 1000) {
+        console.log("Syncing quotes from server...");
+        const fetchedQuote = await fetchQuotesFromServer();
+        console.log("Fetched Quote:", fetchedQuote);
+    }
+
+    
+
+}
+
 // Event listener for DOM content loaded
 window.addEventListener("DOMContentLoaded", () => {
     const savedQuote = localStorage.getItem("savedQuote");
