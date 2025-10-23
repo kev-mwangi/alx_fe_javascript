@@ -167,19 +167,20 @@ function getQuoteFromLocalStorage() {
 
 // Sycn Quotes function
 async function syncQuotes() {
-
-    const lastFetch = localStorage.getItem("quotes");
-    const now = new Date();
-
-
-    if (!lastFetch || (now - new Date(lastFetch)) > 24 * 60 * 60 * 1000) {
-        console.log("Syncing quotes from server...");
-        const fetchedQuote = await fetchQuotesFromServer();
-        console.log("Fetched Quote:", fetchedQuote);
-    }
-
+    // check for new quotes from server every 24 hours using setInterval
     
+    setInterval(async () => {
 
+        const lastFetch = localStorage.getItem("quotes");
+        const now = new Date();
+
+        if (!lastFetch || (now - new Date(lastFetch)) > 24 * 60 * 60 * 1000) {
+            console.log("⏰ Time to sync quotes from server...");
+            const newQuote = await fetchQuotesFromServer();
+            console.log("New quote fetched during sync:", newQuote);
+        }
+
+    }, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
 }
 
 // Event listener for DOM content loaded
