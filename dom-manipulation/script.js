@@ -30,7 +30,7 @@ const quotes = [
 ]
 
 
-function getRandomQuote() {
+function showRandomQuote() {
     for (let i = 0; i < quotes.length; i++) {
         const randomIndex = Math.floor(Math.random() * quotes.length);
         const randomQuote = quotes[randomIndex];
