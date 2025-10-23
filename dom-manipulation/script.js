@@ -88,6 +88,81 @@ function populateCategories() {
     console.log(categories);
     return categories;
 }
+function JSONplaceholder() {
+    // Placeholder function for JSON import
+}
+
+
+async function fetchQuoteFromServer() {
+    try {
+        console.log("🔄 Fetching from quotes.json...");
+        
+        // Fetch from your actual quotes.json file in the repo
+        const response = await fetch('./quotes.json', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // Add timeout to simulate real API behavior
+            signal: AbortSignal.timeout(3000)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const quotesFromServer = await response.json();
+        
+        // Get a random quote from the server response
+        const randomIndex = Math.floor(Math.random() * quotesFromServer.length);
+        const quoteData = quotesFromServer[randomIndex];
+        quoteData.source = "quotes.json (server)";
+        quoteData.fetchedAt = new Date().toISOString();
+
+        // Update localStorage with fresh data from server
+        localStorage.setItem("quotes", JSON.stringify(quotesFromServer));
+        localStorage.setItem("lastServerFetch", new Date().toISOString());
+        
+        console.log("✅ Successfully fetched from quotes.json");
+        return quoteData;
+
+    } catch (error) {
+        console.warn("❌ Failed to fetch from quotes.json, using localStorage:", error.message);
+        return getQuoteFromLocalStorage();
+    }
+}
+
+function getQuoteFromLocalStorage() {
+    // Try to get quotes from localStorage
+    const storedQuotes = localStorage.getItem("quotes");
+    
+    if (storedQuotes) {
+        const quotes = JSON.parse(storedQuotes);
+        if (quotes.length > 0) {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[randomIndex];
+            quote.source = "localStorage";
+            return quote;
+        }
+    }
+    
+    // Ultimate fallback - hardcoded quotes
+    console.warn("No quotes found in localStorage, using fallback quotes");
+    const fallbackQuotes = [
+        {
+            text: "The best way to get started is to quit talking and begin doing.",
+            category: "Motivational",
+            source: "fallback"
+        },
+        {
+            text: "Don't let yesterday take up too much of today.",
+            category: "Inspirational", 
+            source: "fallback"
+        }
+    ];
+    
+    return fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+}
 
 // Event listener for DOM content loaded
 window.addEventListener("DOMContentLoaded", () => {
