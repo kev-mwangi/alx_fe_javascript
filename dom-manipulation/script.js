@@ -98,7 +98,7 @@ async function fetchQuotesFromServer() {
         console.log("🔄 Fetching from quotes.json...");
         
         // Fetch from your actual quotes.json file in the repo
-        const response = await fetch('./quotes.json', {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
