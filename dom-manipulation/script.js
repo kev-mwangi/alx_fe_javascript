@@ -93,7 +93,7 @@ function JSONplaceholder() {
 }
 
 
-async function fetchQuoteFromServer() {
+async function fetchQuotesFromServer() {
     try {
         console.log("🔄 Fetching from quotes.json...");
         
